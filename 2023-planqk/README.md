@@ -9,6 +9,12 @@
 If you are in the network of the University of Stuttgart, the `apt` command might fail.
 To fix that, write the DNS of the network into the resolv.conf file and remove the leading underscore in the file name of `_docker-compose.overwrite.yml`.
 
+### SSH key for private content repositories
+
+The database can fill itself automatically with example data.
+To activate this you need to copy an SSH private key that you have linked with GitHub into the `ssh_secret` file.
+
+
 ### Run the repository:
 
 Download and pull the necessary images:
