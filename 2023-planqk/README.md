@@ -68,6 +68,12 @@ You can use one or multiple of the following profiles to select which containers
 
 To use multiple profiles at once, use multiple profile flags e.g. `--profile workflow --profile pattern`.
 
+## Troubleshooting
+
+### invalid mount config for type "bind": bind source path does not exist: .../QuantME-UseCases/2023-planqk/ssh_secret
+
+Add an SSH key as described [here](#ssh-key-for-private-content-repositories) or just create an empty file named `ssh_secret`.
+
 ## Haftungsausschluss
 
  Dies ist ein Forschungsprototyp.
