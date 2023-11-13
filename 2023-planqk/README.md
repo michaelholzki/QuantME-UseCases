@@ -12,7 +12,7 @@ To fix that, write the DNS of the network into the resolv.conf file and remove t
 ### SSH key for private content repositories
 
 The database can fill itself automatically with example data.
-To activate this you need to copy an SSH private key that you have linked with GitHub into the `ssh_secret` file.
+To activate this you need to create a SSH key that you link with GitHub and copy the private key to the current folder and name the file `ssh_secret`.
 
 
 ### Run the repository:
