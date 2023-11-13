@@ -33,11 +33,13 @@ else
     echo "ssh key not present, proceeding with empty db for qc-atlas"
 fi
 
- # clone repo, if successful copy setup script to /docker-entrypoint-initdb.d/
-git clone --single-branch --branch ${PATTERNATLAS_CONTENT_REPOSITORY_BRANCH} ${PATTERNATLAS_CONTENT_REPOSITORY_URL} ${PATTERNATLAS_CONTENT_REPOSITORY_PATH}
-if [ -d "${PATTERNATLAS_CONTENT_REPOSITORY_PATH}/${PATTERNATLAS_SUBFOLDER_CONTENT_BACKUP_FILES}" ]; then
-    cp setup-patternatlas.sh /docker-entrypoint-initdb.d/
-    echo "${PATTERNATLAS_CONTENT_REPOSITORY_BRANCH} of pattern-atlas-content repo was cloned successfully"
-else
-    echo "unable to find specified directory with example data for pattern-atlas in the repository"
-fi
+# cloning of pattern atlas content is disabled here, because the pattern-atlas-api container will import the data into the DB
+
+# clone repo, if successful copy setup script to /docker-entrypoint-initdb.d/
+# git clone --single-branch --branch ${PATTERNATLAS_CONTENT_REPOSITORY_BRANCH} ${PATTERNATLAS_CONTENT_REPOSITORY_URL} ${PATTERNATLAS_CONTENT_REPOSITORY_PATH}
+# if [ -d "${PATTERNATLAS_CONTENT_REPOSITORY_PATH}/${PATTERNATLAS_SUBFOLDER_CONTENT_BACKUP_FILES}" ]; then
+#     cp setup-patternatlas.sh /docker-entrypoint-initdb.d/
+#     echo "${PATTERNATLAS_CONTENT_REPOSITORY_BRANCH} of pattern-atlas-content repo was cloned successfully"
+# else
+#     echo "unable to find specified directory with example data for pattern-atlas in the repository"
+# fi
