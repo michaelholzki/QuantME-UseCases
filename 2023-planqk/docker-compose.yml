@@ -113,6 +113,25 @@ services:
       - 8061:8080
     networks:
       - planqk-demo
+  
+  transformation-backend:
+    image: planqk/quantme-backend:v1.8.0
+    platform: linux/amd64
+    profiles:
+      - all
+      - workflow
+    environment:
+      CAMUNDA_ENDPOINT: http://${PUBLIC_HOSTNAME}:8090/engine-rest
+      OPENTOSCA_ENDPOINT: http://${PUBLIC_HOSTNAME}:1337/csars
+      PORT: 8888
+      QRM_USERNAME: ${QRM_USERNAME}
+      QRM_REPONAME: ${QRM_REPONAME}
+      QRM_REPOPATH: ${QRM_REPOPATH}
+      WINERY_ENDPOINT: http://${PUBLIC_HOSTNAME}:8093/winery
+    ports:
+      - 8888:8888
+    networks:
+      - planqk-demo
 
   camunda-engine:
     image: camunda/camunda-bpm-platform:run-7.19.0
