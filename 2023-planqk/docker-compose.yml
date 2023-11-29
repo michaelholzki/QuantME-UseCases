@@ -96,9 +96,19 @@ services:
     profiles:
       - all
       - workflow
+      - quokka
     environment:
-     CAMUNDA_ENDPOINT: http://localhost:8090/engine-rest
-     PATTERN_ATLAS_ENDPOINT: http://localhost:1977/patternatlas/patternLanguages/af7780d5-1f97-4536-8da7-4194b093ab1d
+     CAMUNDA_ENDPOINT: http://$PUBLIC_HOSTNAME:8090/engine-rest
+     PATTERN_ATLAS_ENDPOINT: http://$PUBLIC_HOSTNAME:1977/patternatlas/patternLanguages/af7780d5-1f97-4536-8da7-4194b093ab1d
+     OPENTOSCA_ENDPOINT: http://$PUBLIC_HOSTNAME:1337/csars
+     WINERY_ENDPOINT: http://$PUBLIC_HOSTNAME:8093/winery
+     ENABLE_DATA_FLOW_PLUGIN: 'false'
+     ENABLE_PLANQK_PLUGIN: 'false'
+     ENABLE_QHANA_PLUGIN: 'false'
+     ENABLE_QUANTME_PLUGIN: 'true'
+     QRM_USERNAME: ${GITHUB_USER}
+     QRM_REPONAME: 'QuantME-UseCases'
+     QRM_REPOPATH: '2023-ccis/qrms'
     ports:
       - 8061:8080
     networks:
@@ -109,6 +119,7 @@ services:
     profiles:
       - all
       - workflow
+      - quokka
     ports:
       - 8090:8080
     networks:
@@ -342,6 +353,7 @@ services:
     profiles:
       - all
       - nisq
+      - quokka
     command: sh /app/startup.sh
     ports:
       - "5013:5013"
@@ -358,6 +370,7 @@ services:
     profiles:
       - all
       - nisq
+      - quokka
     command: rq worker --url redis://redis:5040 qiskit-service_execute
     environment:
       - REDIS_URL=redis://redis:5040
@@ -658,6 +671,88 @@ services:
       - '9990-9999:9990-9999/udp'
     extra_hosts:
       - "host.docker.internal:host-gateway"
+    networks:
+      - planqk-demo
+
+##########
+# Quokka #
+##########
+
+  execution-service:
+    image: planqk/execution-service:latest
+    platform: linux/amd64
+    profiles:
+      - all
+      - quokka
+    ports:
+      - '5075:5075'
+    networks:
+      - planqk-demo
+      
+  optimization-service:
+    image: planqk/optimization-service:latest
+    platform: linux/amd64
+    profiles:
+      - all
+      - quokka
+    ports:
+      - '5074:5074'
+    networks:
+      - planqk-demo
+    env_file:
+      - .env
+      
+  objective-evaluation-service:
+    image: planqk/objective-evaluation-service:latest
+    platform: linux/amd64
+    profiles:
+      - all
+      - quokka
+    ports:
+      - '5072:5072'
+    networks:
+      - planqk-demo
+      
+  circuit-generation-service:
+    image: planqk/quantum-circuit-generator:latest
+    platform: linux/amd64
+    profiles:
+      - all
+      - quokka
+    ports:
+      - '5073:5073'
+    networks:
+      - planqk-demo
+
+  circuit-cutting-service:
+    image: planqk/circuit-cutting-service:v0.1.0
+    platform: linux/amd64
+    profiles:
+      - all
+      - quokka
+    ports:
+      - '5076:5076'
+    networks:
+      - planqk-demo
+
+  warm-starting-service:
+    image: planqk/warm-starting-service:latest
+    platform: linux/amd64
+    profiles:
+      - all
+      - quokka
+    ports:
+      - '5077:5077'
+    networks:
+      - planqk-demo
+
+  quokka-gateway:
+    image: planqk/quokka-gateway:0.2.0
+    profiles:
+      - all
+      - quokka
+    ports:
+      - '6474:6474'
     networks:
       - planqk-demo
 

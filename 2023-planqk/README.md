@@ -65,6 +65,7 @@ You can use one or multiple of the following profiles to select which containers
 | nisq     | NISQ Analyzer    |
 | qhana    | QHAna            |
 | tosca    | OpenTOSCA        |
+| quokka   | Quokka           |
 
 To use multiple profiles at once, use multiple profile flags e.g. `--profile workflow --profile pattern`.
 
